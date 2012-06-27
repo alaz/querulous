@@ -1,9 +1,12 @@
 import sbt._
 import com.twitter.sbt._
 
-class QuerulousProject(info: ProjectInfo) extends StandardParentProject(info)
-with DefaultRepos
-with SubversionPublisher {
+class QuerulousProject(info: ProjectInfo)
+  extends StandardParentProject(info)
+  with DefaultRepos
+  with SubversionPublisher
+  with ParentProjectDependencies
+{
 
   lazy val coreProject = project(
     "querulous-core", "querulous-core_2.9.1",
@@ -28,11 +31,11 @@ with SubversionPublisher {
     with DefaultRepos
     with SubversionPublisher
 
-  val utilVersion    = "1.12.13"
-  val finagleVersion = "1.11.0"
-
   class CoreProject(info: ProjectInfo) extends StandardLibraryProject(info) with Defaults {
-    val utilCore  = "com.twitter"  % "util-core_2.9.1"      % utilVersion
+    projectDependencies(
+      "util"     ~ "util-core"
+    )
+
     val dbcp      = "commons-dbcp" % "commons-dbcp"         % "1.4"
     val mysqljdbc = "mysql"        % "mysql-connector-java" % "5.1.18"
     val pool      = "commons-pool" % "commons-pool"         % "1.5.4"
@@ -49,12 +52,16 @@ with SubversionPublisher {
   }
 
   class TracingProject(info: ProjectInfo) extends StandardLibraryProject(info) with Defaults {
-    val finagle = "com.twitter" % "finagle-core_2.9.1" % finagleVersion
+    projectDependencies(
+      "finagle"  ~ "finagle-core"
+    )
   }
 
   class Ostrich4Project(info: ProjectInfo) extends StandardLibraryProject(info) with Defaults {
     // rely on finagle to pull in ostrich, for compat w/ tracing version.
-    val ostrich = "com.twitter" % "finagle-ostrich4_2.9.1" % finagleVersion
+    projectDependencies(
+      "finagle"  ~ "finagle-ostrich4"
+    )
   }
 
   override def subversionRepository = Some("https://svn.twitter.biz/maven-public/")
