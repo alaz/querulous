@@ -5,7 +5,6 @@ class QuerulousProject(info: ProjectInfo)
   extends StandardParentProject(info)
   with DefaultRepos
   with SubversionPublisher
-  with ParentProjectDependencies
 {
 
   lazy val coreProject = project(
@@ -32,15 +31,12 @@ class QuerulousProject(info: ProjectInfo)
     with SubversionPublisher
 
   class CoreProject(info: ProjectInfo) extends StandardLibraryProject(info) with Defaults {
-    projectDependencies(
-      "util"     ~ "util-core"
-    )
-
+    val utilCore  = "com.twitter"  % "util-core_2.9.1"      % "3.0.0"
     val dbcp      = "commons-dbcp" % "commons-dbcp"         % "1.4"
     val mysqljdbc = "mysql"        % "mysql-connector-java" % "5.1.18"
     val pool      = "commons-pool" % "commons-pool"         % "1.5.4"
 
-    val utilEval   = "com.twitter"             % "util-eval_2.9.1"    % utilVersion % "test"
+    val utilEval   = "com.twitter"             % "util-eval_2.9.1"    % "3.0.0"     % "test"
     val scalaTools = "org.scala-lang"          % "scala-compiler"     % "2.9.1"     % "test"
     val hamcrest   = "org.hamcrest"            % "hamcrest-all"       % "1.1"       % "test"
     val specs      = "org.scala-tools.testing" % "specs_2.9.1"        % "1.6.9"     % "test"
@@ -52,17 +48,15 @@ class QuerulousProject(info: ProjectInfo)
   }
 
   class TracingProject(info: ProjectInfo) extends StandardLibraryProject(info) with Defaults {
-    projectDependencies(
-      "finagle"  ~ "finagle-core"
-    )
+    val finagleCore   = "com.twitter"        % "finagle-core_2.9.1"    % "3.0.0"
   }
 
   class Ostrich4Project(info: ProjectInfo) extends StandardLibraryProject(info) with Defaults {
-    // rely on finagle to pull in ostrich, for compat w/ tracing version.
-    projectDependencies(
-      "finagle"  ~ "finagle-ostrich4"
-    )
+    val finagleOstrich = "com.twitter"       % "finagle-ostrich4_2.9.1"    % "3.0.0"
   }
 
   override def subversionRepository = Some("https://svn.twitter.biz/maven-public/")
+
+  override def managedStyle = ManagedStyle.Maven
+  val publishTo = Resolver.file("dotM2", new java.io.File(Path.userHome + "/.m2/repository"))
 }

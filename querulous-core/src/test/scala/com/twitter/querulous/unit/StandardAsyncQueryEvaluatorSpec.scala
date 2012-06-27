@@ -30,7 +30,7 @@ class StandardAsyncQueryEvaluatorSpec extends Specification with JMocker with Cl
   "BlockingEvaluatorWrapper" should {
     "select" in {
       expect {
-        one(database).hosts()                                              willReturn List("localhost")
+        one(database).hosts                                              willReturn List("localhost")
         one(database).name                                                 willReturn "test"
         one(database).openTimeout                                          willReturn 500.millis
         one(database).open()                                               willReturn connection
@@ -43,7 +43,7 @@ class StandardAsyncQueryEvaluatorSpec extends Specification with JMocker with Cl
 
     "selectOne" in {
       expect {
-        one(database).hosts()                                              willReturn List("localhost")
+        one(database).hosts                                              willReturn List("localhost")
         one(database).name                                                 willReturn "test"
         one(database).openTimeout                                          willReturn 500.millis
         one(database).open()                                               willReturn connection
@@ -56,7 +56,7 @@ class StandardAsyncQueryEvaluatorSpec extends Specification with JMocker with Cl
 
     "count" in {
       expect {
-        one(database).hosts()                                              willReturn List("localhost")
+        one(database).hosts                                              willReturn List("localhost")
         one(database).name                                                 willReturn "test"
         one(database).openTimeout                                          willReturn 500.millis
         one(database).open()                                               willReturn connection
@@ -71,7 +71,7 @@ class StandardAsyncQueryEvaluatorSpec extends Specification with JMocker with Cl
       val sql = "INSERT INTO foo (id) VALUES (1)"
 
       expect {
-        one(database).hosts()                                        willReturn List("localhost")
+        one(database).hosts                                        willReturn List("localhost")
         one(database).name                                           willReturn "test"
         one(database).openTimeout                                    willReturn 500.millis
         one(database).open()                                         willReturn connection
@@ -86,7 +86,7 @@ class StandardAsyncQueryEvaluatorSpec extends Specification with JMocker with Cl
       val sql = "INSERT INTO foo (id) VALUES (?)"
 
       expect {
-        one(database).hosts()                                        willReturn List("localhost")
+        one(database).hosts                                        willReturn List("localhost")
         one(database).name                                           willReturn "test"
         one(database).openTimeout                                    willReturn 500.millis
         one(database).open()                                         willReturn connection
@@ -102,7 +102,7 @@ class StandardAsyncQueryEvaluatorSpec extends Specification with JMocker with Cl
       val sql = "INSERT INTO foo (id) VALUES (1)"
 
       expect {
-        one(database).hosts()                                        willReturn List("localhost")
+        one(database).hosts                                        willReturn List("localhost")
         one(database).name                                           willReturn "test"
         one(database).openTimeout                                    willReturn 500.millis
         one(database).open()                                         willReturn connection
